@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-tabs">
+            <div class="auth-tab active" data-tab="login">Login</div>
+            <div class="auth-tab" data-tab="signup">Sign Up</div>
+        </div>
+        
+        <!-- Login Form -->
+        <form class="auth-form active" id="loginForm" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="auth-btn">Login</button>
+        </form>
+        
+        <!-- Signup Form -->
+        <form class="auth-form" id="signupForm" method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="signupName">Full Name</label>
+                <input type="text" id="signupName" name="full_name" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" class="auth-btn">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Add all the CSS styles from the previous code here */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    .auth-container {
+        display: flex;
+        width: 100%;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .auth-box {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+    }
+    
+    .auth-tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .auth-tab {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        color: #777;
+        transition: all 0.3s;
+    }
+    
+    .auth-tab.active {
+        color: #2575fc;
+        border-bottom: 2px solid #2575fc;
+    }
+    
+    .auth-form {
+        display: none;
+    }
+    
+    .auth-form.active {
+        display: block;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+    
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    
+    .auth-btn {
+        width: 100%;
+        padding: 12px;
+        background: #2575fc;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    
+    .auth-btn:hover {
+        background: #1a68e8;
+    }
+</style>
+
+<script>
+    // Tab switching functionality
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const authForms = document.querySelectorAll('.auth-form');
+    
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabName = tab.getAttribute('data-tab');
+            
+            // Update active tab
+            authTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Show corresponding form
+            authForms.forEach(form => {
+                form.classList.remove('active');
+                if (form.id === `${tabName}Form`) {
+                    form.classList.add('active');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

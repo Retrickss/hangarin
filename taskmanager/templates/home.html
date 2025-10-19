@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Hangarin{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h3 mb-1">Dashboard</h1>
+            <p class="text-muted mb-0">Welcome to your task management dashboard</p>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle me-2"></i>User
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="container-fluid py-4">
+    <!-- Welcome Card -->
+   <!-- Welcome Card -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="welcome-card">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="mb-3">          Good day{% if is_authenticated %}, {{ username }}{% endif %}! 👋</h2>
+                    <p class="mb-0">
+                <div class="col-md-4 text-center">
+                    <i class="bi bi-check2-all display-1 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Task Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="stat-card total-tasks">
+                <div class="stat-number">22</div>
+                <div class="stat-label">Total Tasks</div>
+                <div class="stat-description">All tasks in system</div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stat-card completed-tasks">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Completed</div>
+                <div class="stat-description">Finished tasks</div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stat-card pending-tasks">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Pending</div>
+                <div class="stat-description">Tasks in progress</div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity & Quick Actions -->
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="recent-activity">
+                <h5 class="mb-3">Recent Activity</h5>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item px-0">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 p-2 rounded me-3">
+                                <i class="bi bi-check-lg text-success"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0">Task completed</h6>
+                                <p class="text-muted mb-0 small">"Design homepage mockup" was marked as done</p>
+                            </div>
+                            <span class="text-muted small">2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item px-0">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                                <i class="bi bi-plus-lg text-primary"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0">New task added</h6>
+                                <p class="text-muted mb-0 small">"Write project documentation" was created</p>
+                            </div>
+                            <span class="text-muted small">5 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item px-0">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning bg-opacity-10 p-2 rounded me-3">
+                                <i class="bi bi-pencil text-warning"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0">Task updated</h6>
+                                <p class="text-muted mb-0 small">Due date for "Client meeting" was changed</p>
+                            </div>
+                            <span class="text-muted small">Yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="recent-activity">
+                <h5 class="mb-3">Quick Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'task_list' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Task
+                    </a>
+                    <a href="{% url 'task_list' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-list-check me-2"></i>View All Tasks
+                    </a>
+                    <a href="{% url 'category_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-tags me-2"></i>Manage Categories
+                    </a>
+                    <a href="{% url 'note_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-sticky me-2"></i>View Notes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Update current date
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentDate = new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        const dateElement = document.getElementById('current-date');
+        if (dateElement) {
+            dateElement.textContent = currentDate;
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Notes - Hangarin{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-3 border-bottom bg-white">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 class="h3 mb-0">Notes</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Notes</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-auto">
+            <a href="{% url 'note_add' %}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Add Note
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">All Notes</h5>
+        </div>
+        <div class="card-body">
+            {% if notes %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Task</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for note in notes %}
+                        <tr>
+                            <td>{{ note.title }}</td>
+                            <td>{{ note.content|truncatewords:10 }}</td>
+                            <td>{{ note.task.title|default:"-" }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'note_edit' note.pk %}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <a href="{% url 'note_delete' note.pk %}" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-sticky display-1 text-muted"></i>
+                <h3 class="text-muted">No notes found</h3>
+                <p class="text-muted">Get started by creating your first note.</p>
+                <a href="{% url 'note_add' %}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create Note
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

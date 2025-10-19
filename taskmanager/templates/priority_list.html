@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Priorities - Hangarin{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-3 border-bottom bg-white">
+    <div class="row align-items-center">
+        <div class="col">
+            <h1 class="h3 mb-0">Priorities</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Priorities</li>
+                </ol>
+            </nav>
+        </div>
+        <!-- Remove the Add button -->
+    </div>
+</div>
+
+<div class="container-fluid py-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">All Priorities</h5>
+        </div>
+        <div class="card-body">
+            {% if priorities %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Level</th>
+                            <th>Color</th>
+                            <!-- Remove Actions column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for priority in priorities %}
+                        <tr>
+                            <td>{{ priority.name }}</td>
+                            <td>{{ priority.level }}</td>
+                            <td>
+                                    {{ priority.color }}
+                                </span>
+                            </td>
+                            <!-- Remove Actions buttons -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-flag display-1 text-muted"></i>
+                <h3 class="text-muted">No priorities found</h3>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
